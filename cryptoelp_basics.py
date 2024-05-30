@@ -97,3 +97,8 @@ def fixed_xor(a, b):
         ret += chr(ac ^ bc)
     
     return ret
+
+
+def single_byte_xor_decode(encoded, key):
+    return fixed_xor(encoded, chr(key) * len(encoded))
+

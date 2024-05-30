@@ -34,10 +34,6 @@ class TestCryptoelpBasics(unittest.TestCase):
         self.assertEqual(fixed_xor("a", "b"), fixed_xor("b", "a"))
         self.assertEqual(fixed_xor("a", "b"), chr(3))
 
-
-
-
-
     def tearDown(self):
         pass
 
