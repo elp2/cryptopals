@@ -3,7 +3,6 @@ from cryptoelp_scoring import score_english_ascii_simple
 
 from collections import Counter
 
-####################
 def challenge1():
     print("Challenge 1")
 
@@ -16,7 +15,6 @@ def challenge1():
     assert C1EXPECTED == base64_encode(c1bytes)
     print("Pass!")
 
-####################
 def challenge2():
     print("Challenge 2")
 
@@ -37,22 +35,40 @@ def challenge2():
     print("Pass")
 
 
-####################
-def challenge3():
-    print("Challenge 3")
+def break_single_byte_xor(hextets):
     scores = Counter()
-
-    C3 = hextets_to_chars("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")
     for key in range(255):
-        decoded = single_byte_xor_decode(C3, key)
+        decoded = single_byte_xor_decode(hextets, key)
         scores[(chr(key), decoded)] = score_english_ascii_simple(decoded)
 
+    return scores
+
+def challenge3():
+    print("Challenge 3")
+
+    C3 = hextets_to_chars("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")
+
+    scores = break_single_byte_xor(C3)
     key, message = scores.most_common(1)[0][0]
     assert key == "X"
     assert message == "Cooking MC's like a pound of bacon"
-    print "Pass"
+    print("Pass")
 
+
+def challenge4():
+    print("Challenge 4")
+    scores = Counter()
+    for line in open("set1_challenge4.txt").readlines():
+        chars = hextets_to_chars(line.strip())
+        scores += break_single_byte_xor(chars)
+
+    key, message = scores.most_common(1)[0][0]
+    assert key == "5"
+    assert message == "Now that the party is jumping\n"    
+
+    print("Pass")
 
 challenge1()
 challenge2()
 challenge3()
+challenge4()
