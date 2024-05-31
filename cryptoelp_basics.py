@@ -102,3 +102,10 @@ def fixed_xor(a, b):
 def single_byte_xor_decode(encoded, key):
     return fixed_xor(encoded, chr(key) * len(encoded))
 
+
+def repeating_key_xor_encdec(msg, key):
+    ret = []
+    for i, enc in enumerate(msg):
+        k = key[i % len(key)]
+        ret.append(fixed_xor(k, enc))
+    return "".join(ret)
