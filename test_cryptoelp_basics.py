@@ -1,6 +1,6 @@
 import unittest
 
-from cryptoelp_basics import base64_decode, base64_encode, hextets_to_chars, fixed_xor, chars_to_hextets
+from cryptoelp_basics import base64_decode, base64_encode, hextets_to_chars, fixed_xor, chars_to_hextets, hamming_distance
 
 BASE64_ENCODE_DECODE_PAIRS = {
     "TQ==": "M",
@@ -33,6 +33,9 @@ class TestCryptoelpBasics(unittest.TestCase):
     def test_fixed_xor_simple(self):
         self.assertEqual(fixed_xor("a", "b"), fixed_xor("b", "a"))
         self.assertEqual(fixed_xor("a", "b"), chr(3))
+
+    def test_hamming_distance(self):
+        self.assertEqual(hamming_distance("this is a test", "wokka wokka!!!"), 37)
 
     def tearDown(self):
         pass

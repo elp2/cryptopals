@@ -109,3 +109,15 @@ def repeating_key_xor_encdec(msg, key):
         k = key[i % len(key)]
         ret.append(fixed_xor(k, enc))
     return "".join(ret)
+
+def hamming_distance(a, b):
+    dist = 0
+    assert len(a) == len(b)
+    for ac, bc in zip(a, b):
+        diff_bits = ord(ac) ^ ord(bc)
+        while diff_bits != 0:
+            if diff_bits & 0b1:
+                dist += 1
+            diff_bits >>= 1
+    return dist
+
